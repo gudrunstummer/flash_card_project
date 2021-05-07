@@ -12,10 +12,10 @@ to_learn = {}
 # except block deals with this instance and creates a to_learn dictionary
 
 try:
-    data = pandas.read_csv("data/words_to_learn.csv")
+    data = pandas.read_csv("words_to_learn.csv")
 
 except FileNotFoundError:
-    original_data = pandas.read_csv("data/french_words.csv")
+    original_data = pandas.read_csv("french_words.csv")
     to_learn = original_data.to_dict(orient="records")
 else:
     to_learn = data.to_dict(orient="records")
@@ -42,7 +42,7 @@ def flip_card():
 def is_known():
     to_learn.remove(current_card)
     data = pandas.DataFrame(to_learn)
-    data.to_csv("data/words_to_learn.csv", index=False)
+    data.to_csv("words_to_learn.csv", index=False)
     next_card()
 
 #----------------------- GUI ------------------------#
@@ -56,8 +56,8 @@ flip_timer = window.after(3000, func=flip_card)  # after 3000 milliseconds we ar
 
 # card
 canvas = Canvas(width=800, height=526, bg=BACKGROUND_COLOR, highlightthickness=0)
-front_img = PhotoImage(file="images/card_front.png")
-back_img = PhotoImage(file="images/card_back.png")
+front_img = PhotoImage(file="card_front.png")
+back_img = PhotoImage(file="card_back.png")
 canvas_image = canvas.create_image(400, 260, image=front_img)
 card_title = canvas.create_text(400, 150, text="Language", fill="grey", font=("Courier", 40, "italic"))
 card_word = canvas.create_text(400, 263, text="word", fill="grey", font=("Courier", 60, "bold"))
@@ -65,13 +65,13 @@ canvas.grid(column=0, row=0, columnspan=2)
 
 
 # right button
-right = PhotoImage(file="images/right.png")
+right = PhotoImage(file="right.png")
 right_button = Button(image=right, highlightthickness=0, command=is_known)
 right_button.grid(column=0, row=1)
 
 
 # wrong button
-wrong = PhotoImage(file="images/wrong.png")
+wrong = PhotoImage(file="wrong.png")
 wrong_button = Button(image=wrong, highlightthickness=0, command=next_card)
 wrong_button.grid(column=1, row=1)
 
